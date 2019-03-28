@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Collins Moviez</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+      img{
+        width:128px;
+        height:128px;
+        }
+      body{
+        text-align: center;
+        }
+      footer{
+         height:30px;
+         }
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <div class="block">
+      <div class="notification is-info">
+        <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <span class="content title is-4">CA Moviez Search</span>
+          </div>
+        </div>
+          <div class="level-right">
+            <div class="level-item">
+              <div class="field has-addons">
+                <p class="control">
+                  <input class="input is-small" type="text" placeholder="Search for a movie">
+                </p>
+                <p class="control">
+                  <button class="button is-success is-small">Search</button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="main">
+    <div class="block">
+      <div class="columns is-mobile">
+        <div class="column">
+          <figure class="image is-128x128">
+            <img src="https://i.imgur.com/OuoVM.gif">
+          </figure>
+        </div>
+        <div class="column">
+          <figure class="image is-128x128">
+            <img src="https://i.imgur.com/niE8r.gif">
+          </figure>
+        </div>
+      </div>
+    </div>
+    
+    <div class="block">
+      <div class="columns is-mobile">
+        <div class="column">
+          <figure class="image is-1280x128">
+            <img src="https://i.imgur.com/c0yas.gif">
+          </figure>
+        </div>
+        <div class="column">
+          <figure class="image is-128x128">
+            <img src="http://www.reactiongifs.com/r/sdey.gif">
+          </figure>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+    <div id="block">
+    </div>
+    
+    <div class="block">
+      <footer class="footer is-small">
+        <div class="content has-text-centered">
+          <p>All rights reserved</p><br>
+          &copy;conel
+        </div>
+      </footer>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+  <script>
+    let input_movie = document.querySelector('input');
+    let display = document.querySelector('#block');
+    let url ='http://www.omdbapi.com/?apiKey=adfa54be&s=';
+    let btn = document.querySelector('button');
+    let main = document.querySelector('#main');
+    input_movie.addEventListener('input', ()=>{
+      if (input_movie.value==''){
+        //display.style.display = 'none';
+        main.style.display = 'block';
+        }});
+    btn.addEventListener('click', process);
+    function process(){
+      if (input_movie.value==''||input_movie.value==' ' || input_movie.value=='  '){
+        return false;
+        }
+      let container = '';
+      main.style.display = 'none';
+      fetch(url+input_movie.value).then((res)=>{return res.json()})
+      .then((res)=>{
+      res.Search.forEach((item)=>{
+        container +='Title: '+ item['Title']+'<br>'+'Year: '+item['Year']+'<br>'+'Imdb_id: '+item['imdbID']+
+        '<br>'+ item['Type']+'<br>'+'<a href="http://www.imdb.com/title/'+item['imdbID']+'\"'+'>'+'Click for more info'+'</a>'+'<br>'+'<img src='+item['Poster']+'>'+'<br><br>'+'<br><br>';
+        
+        });
+        display.innerHTML = container;
+      }).catch((err)=>{
+        display.innerHTML = 'Not Found'
+      });
+      }
+  </script>
+  
+  </body>
+</html>
